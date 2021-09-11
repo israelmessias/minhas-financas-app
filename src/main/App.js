@@ -1,6 +1,7 @@
 import React from 'react';
-//import Login from '../src/views/Login'
-import CadastroUser from '../views/CadastroUser'
+
+import Rotas from './Rotas'
+import Navbar from '../components/Navbar';
 import 'bootswatch/dist/pulse/bootstrap.css'
 import '../views/custom.css'
 
@@ -8,9 +9,12 @@ class App extends React.Component{
   render()
   {
     return(
-    <div>
-      <CadastroUser />
-    </div>
+      <>
+         <Navbar />
+         <div className="container">
+              <Rotas />
+         </ div>
+      </>  
     )
   }
 }
