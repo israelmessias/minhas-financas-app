@@ -4,18 +4,29 @@ import FormGroup from "../components/Form-group";
 
 import { withRouter } from  'react-router-dom'
 
+import axios from 'axios'
+
 class Login extends React.Component{
 
     state =
     {
         email: '',
         senha: '',
+        mensagemErro: null
     }
 
     entrar = () =>
     {
-        console.log('Email', this.state.email)
-        console.log('senha', this.state.senha)
+        axios
+        .post('http://localhost:8080/api/usuarios/autenticar',
+        {
+            email: this.state.email,
+            senha: this.state.senha    
+        }).then( response =>{
+            console.log(response)
+        }).catch( error => {
+            this.setState({mensagemErro: error.response.data})
+        })
     }
 
     prepararCadastro = () => 
@@ -31,6 +42,9 @@ class Login extends React.Component{
                 <div className="col-md-6" style={{position: 'relative', left: '300px'}}>
                     <div className="bs-docs-section">
                         <Card title="Login">
+                            <div>
+                                <span>{this.state.mensagemErro}</span>
+                            </div>
                             <div className="row">
                                 <div className="col-lg-12">
                                     <div className="bs-component">
@@ -52,7 +66,7 @@ class Login extends React.Component{
                                                 id="exampleInputPassword1" 
                                                 placeholder="Password" />
                                             </FormGroup>
-                                            <button onClick={ this.entrar() } className="btn btn-success">Entrar</button>
+                                            <button onClick={ this.entrar } className="btn btn-success">Entrar</button>
                                             <button onClick={ this.prepararCadastro } className="btn btn-danger">Cadastrar</button>
                                         </fieldset>
                                     </div>
