@@ -17,7 +17,7 @@ function Rotas()
         <HashRouter>
             <Switch>
                 <Route path="/login" component={Login} />
-                <Route path="/cadastro" component={CadastroUser} />
+                <Route path="/cadastro-user" component={CadastroUser} />
             </Switch>
         </HashRouter>
         
