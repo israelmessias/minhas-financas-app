@@ -4,6 +4,7 @@ import {Route, Switch, HashRouter } from 'react-router-dom'
 
 import Login from '../views/Login'
 import CadastroUser from '../views/CadastroUser'
+import Home from '../views/Home'
 
 /*
 *   HashRouter -> /#/ vai buscar na pasta raiz
@@ -16,6 +17,7 @@ function Rotas()
     return (
         <HashRouter>
             <Switch>
+                <Route path="/home" component={Home} />
                 <Route path="/login" component={Login} />
                 <Route path="/cadastro-user" component={CadastroUser} />
             </Switch>
