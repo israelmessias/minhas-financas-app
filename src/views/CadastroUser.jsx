@@ -2,6 +2,8 @@ import React from "react";
 import Card from '../components/Card'
 import FormGroup from '../components/Form-group'
 
+import axios from "axios";
+
 class CadastroUser extends React.Component
 {
 
@@ -15,7 +17,13 @@ class CadastroUser extends React.Component
 
     cadastrar = () =>
     {
-        console.log(this.state)
+        axios.post("http://localhost:8080/api/usuarios/salvar",
+        {
+            nome: this.state.nome,  
+            email: this.state.email,
+            senha: this.state.senha, 
+            senhaRepeticao: this.state.senhaRepeticao 
+        })
     }
 
     render()
