@@ -2801,6 +2801,11 @@ boolbase@^1.0.0, boolbase@~1.0.0:
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
 
+bootswatch@^5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/bootswatch/-/bootswatch-5.1.1.tgz#3c9cd9dc418bffa5a5246d6c7a0b9af256b64dc7"
+  integrity sha512-RL27y1hKIi7y9N+4C1fqQb3po/s3QRMltuGYyX5GMT9RbpTJ6M0658uKOBIHUIigf2BxAlrwzkX0qMA+49bIHA==
+
 brace-expansion@^1.1.7:
   version "1.1.11"
   resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.11.tgz#3c7fcbf529d87226f3d2f52b966ff5271eb441dd"
