@@ -15,18 +15,26 @@ class Login extends React.Component{
         mensagemErro: null
     }
 
-    entrar = () =>
+    /*a função entrar é assíncrona
+    *porque o await vai esperar o axios terminar o processo
+    ai depois irá imprimir a proxima linha*/ 
+    entrar = async () =>
     {
-        axios
+      try{
+
+        const response = await axios
         .post('http://localhost:8080/api/usuarios/autenticar',
         {
             email: this.state.email,
             senha: this.state.senha    
-        }).then( response =>{
-            console.log(response)
-        }).catch( error => {
-            this.setState({mensagemErro: error.response.data})
         })
+        console.log('response: ', response)
+        console.log('Requisição encerrada')
+
+        }catch(erro)
+         {
+        console.log(erro.response)
+         }
     }
 
     prepararCadastro = () => 
