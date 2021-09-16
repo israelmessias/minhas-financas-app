@@ -3,8 +3,10 @@ import Card from '../components/Card'
 import FormGroup from "../components/Form-group";
 
 import { withRouter } from  'react-router-dom'
+import UsuarioService from "./app/service/usuarioService";
+import localStorageService from './app/localStorageService';
+import { mostrarErro } from '../components/Toastr'
 
-import axios from 'axios'
 
 class Login extends React.Component{
 
@@ -15,26 +17,26 @@ class Login extends React.Component{
         mensagemErro: null
     }
 
+    constructor()
+    {
+        super();
+        this.service = new UsuarioService();
+    }
+
     /*a função entrar é assíncrona
     *porque o await vai esperar o axios terminar o processo
     ai depois irá imprimir a proxima linha*/ 
     entrar = async () =>
     {
-      try{
-
-        const response = await axios
-        .post('http://localhost:8080/api/usuarios/autenticar',
-        {
+        this.service.autenticar({
             email: this.state.email,
-            senha: this.state.senha    
+            senha: this.state.senha
+        }).then(response =>{
+            localStorageService.addItem('_usuario_logado', response.data)
+            this.props.history.push('/home')
+        }).catch( erro => {
+            mostrarErro(erro.response.data)
         })
-        console.log('response: ', response)
-        console.log('Requisição encerrada')
-
-        }catch(erro)
-         {
-        console.log(erro.response)
-         }
     }
 
     prepararCadastro = () => 
@@ -50,9 +52,7 @@ class Login extends React.Component{
                 <div className="col-md-6" style={{position: 'relative', left: '300px'}}>
                     <div className="bs-docs-section">
                         <Card title="Login">
-                            <div>
-                                <span>{this.state.mensagemErro}</span>
-                            </div>
+                            
                             <div className="row">
                                 <div className="col-lg-12">
                                     <div className="bs-component">
