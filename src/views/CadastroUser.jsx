@@ -1,11 +1,17 @@
 import React from "react";
 import Card from '../components/Card'
 import FormGroup from '../components/Form-group'
+import { mostrarErro, mostrarSuccess } from "../components/Toastr";
 
-import axios from "axios";
+import UsuarioService from "./app/service/usuarioService";
 
 class CadastroUser extends React.Component
 {
+    constructor()
+    {
+        super();
+        this.service = new UsuarioService();
+    }
 
     state = 
     {
@@ -17,13 +23,18 @@ class CadastroUser extends React.Component
 
     cadastrar = () =>
     {
-        axios.post("http://localhost:8080/api/usuarios/salvar",
-        {
+        const usuario = {
             nome: this.state.nome,  
             email: this.state.email,
-            senha: this.state.senha, 
-            senhaRepeticao: this.state.senhaRepeticao 
-        })
+            senha: this.state.senha
+        }
+
+        this.service.salvar(usuario)
+            .then(response => {
+                mostrarSuccess('Usuario cadastro com sucesso! Faça o login para acessar o sistema.')
+            }).catch(erro =>{
+                mostrarErro(erro.response.data)
+            })
     }
 
     render()
