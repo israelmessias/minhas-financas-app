@@ -27,7 +27,7 @@ class CadastroUser extends React.Component
 
         if(msgs && msgs.length > 0)
         {
-            msgs.forEach(msgs, index => {
+            msgs.forEach ( (msgs, index) => {
                 mostrarErro(msgs)
             })
             return false;
@@ -58,6 +58,9 @@ class CadastroUser extends React.Component
         if(!this.state.email)
         {
             msgs.push('O campo Email é obrigatorio!')
+        }else if(!this.state.nome.match(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]/))
+        {
+            msgs.push('Informe email valido!')
         }
         if(!this.state.senha || !this.state.senhaRepeticao)
         {
