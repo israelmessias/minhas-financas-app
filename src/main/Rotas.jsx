@@ -5,7 +5,7 @@ import {Route, Switch, HashRouter } from 'react-router-dom'
 import Login from '../views/Login'
 import CadastroUser from '../views/CadastroUser'
 import Home from '../views/Home'
-import ConsultaLancamentos from "../views/ConsultaLancamentos";
+import ConsultaLancamentos from "../views/lancamento/ConsultaLancamentos";
 
 /*
 *   HashRouter -> /#/ vai buscar na pasta raiz
