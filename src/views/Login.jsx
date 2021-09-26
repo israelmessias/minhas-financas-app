@@ -23,10 +23,8 @@ class Login extends React.Component{
         this.service = new UsuarioService();
     }
 
-    /*a função entrar é assíncrona
-    *porque o await vai esperar o axios terminar o processo
-    ai depois irá imprimir a proxima linha*/ 
-    entrar = async () =>
+    /**/ 
+    entrar = () =>
     {
         this.service.autenticar({
             email: this.state.email,
