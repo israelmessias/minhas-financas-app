@@ -8,21 +8,21 @@ import LancamentoTable from './LancamentoTable'
 
 class ConsultaLancamentos extends React.Component
 {
+    state= {
+        ano: '',
+        mes: '',
+        tipo: ''
+    }
+
+    buscar = () =>
+    {
+        console.log(this.state)
+    }
+
+     
     render()
     {
-
-        const state= {
-            ano: '',
-            mes: '',
-            tipo: ''
-        }
-
-        /*buscar = () =>
-        {
-            console.log(this.state)
-        }*/
-
-        const meses = [
+       const meses = [
             {label: 'Selecione...', value: ''},
             {label: 'Janeiro', value: 1},
             {label: 'Fevereiro', value: 2},
@@ -37,16 +37,17 @@ class ConsultaLancamentos extends React.Component
             {label: 'Novembro', value: 11},
             {label: 'Dezembro', value: 12},
         ]
-
+    
         const tipos = [
             {label: 'Selecione...', value: ''},
             {label: 'Despesa', value: 'DESPESA'},
             {label: 'Receita', value: 'RECEITA'},
         ]
+    
         const lancamentos = [
             {id:1, descricao: 'boleto', valor: 5,  mes: 1, tipo:'Despesa', status: 'Efetivado'}
         ]
-
+    
         return(
             <Card title="Consulta Lançamentos">
                 <div className="row">
