@@ -55,7 +55,27 @@ class ConsultaLancamentos extends React.Component
             })
     }
 
-     
+    editar = (id) =>
+    {
+        console.log('Editar lançamento', id)
+    }
+    deletar = (lancamento) =>
+    {
+        this.service    
+        .deletar(lancamento.id)
+        .then(response=>{
+            const lancamentos = this.state.lancamento;
+            const index = lancamentos.indexOf(lancamento);
+            lancamentos.splice(index, 1);
+            this.setState(lancamentos)
+            mensages.mostrarSuccess('Lançamento deletado com sucesso!')
+        })
+        .catch(erro =>
+            {
+                mensages.mostrarErro('Lançamento não encontrado!')
+            })
+    }
+
     render()
     {
         const meses = this.service.obterMeses()
@@ -106,7 +126,8 @@ class ConsultaLancamentos extends React.Component
                 <div className="row">
                     <div className="col-md-12">
                         <div className="bs-component">
-                            <LancamentoTable lancamentos={this.state.lancamento} />
+                            <LancamentoTable lancamentos={this.state.lancamento} 
+                            delete={this.deletar} editar={this.editar}/>
                         </div>
                     </div>
                 </div>
