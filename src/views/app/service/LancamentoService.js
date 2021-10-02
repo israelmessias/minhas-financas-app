@@ -6,25 +6,29 @@ export default class LancamentoService extends ApiService{
         super('/api/lancamentos')
     }
 
-    consultar(LancamentoFiltro)
+    consultar(lancamentoFiltro)
     {
-        let params = `?ano=${LancamentoFiltro.ano}`
+        let params = `?ano=${lancamentoFiltro.ano}`
 
-        if(LancamentoFiltro.mes)
+        if(lancamentoFiltro.mes)
         {
-            params = `${params}&mes=${LancamentoFiltro.mes}`
+            params = `${params}&mes=${lancamentoFiltro.mes}`
         }
 
-        if(LancamentoFiltro.tipo)
+        if(lancamentoFiltro.tipo)
         {
-            params = `${params}&tipo=${LancamentoFiltro.tipo}`
+            params = `${params}&tipo=${lancamentoFiltro.tipo}`
         }
 
-        if(LancamentoFiltro.status)
+        if(lancamentoFiltro.status)
         {
-            params = `${params}&status=${LancamentoFiltro.status}`
+            params = `${params}&status=${lancamentoFiltro.status}`
+        }
+
+        if(lancamentoFiltro.usuario){
+            params = `${params}&usuario=${lancamentoFiltro.usuario}`
         }
 
         return this.get(params)
     }
-}
+}   
