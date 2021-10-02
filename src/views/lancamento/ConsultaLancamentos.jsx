@@ -5,18 +5,44 @@ import FormGroup from '../../components/Form-group';
 import SelectMenu from '../../components/SelectMenu'
 import LancamentoTable from './LancamentoTable'
 
+import LancamentoService from "../app/service/LancamentoService";
+import LocalStorageService from "../app/localStorageService";
+
 
 class ConsultaLancamentos extends React.Component
 {
-    state= {
+    constructor()
+    {
+        super();
+        this.service = new LancamentoService();
+    }
+
+    state=
+    {
         ano: '',
         mes: '',
-        tipo: ''
+        tipo: '',
+        lancamento: []
     }
 
     buscar = () =>
     {
-        console.log(this.state)
+        const usuarioLogado = LocalStorageService.obterIten('_usuario_logado')
+
+        const lancamentoFiltro ={
+            ano: this.state.ano,
+            mes: this.state.mes,
+            tipo: this.state.tipo,
+            usuario: usuarioLogado.id
+        }
+
+        this.service
+        .consultar(lancamentoFiltro)
+            .then(response => {
+                this.setState({lancamento: response.data})
+            }).catch(erro => {
+                console.log(erro)
+            })
     }
 
      
@@ -42,10 +68,6 @@ class ConsultaLancamentos extends React.Component
             {label: 'Selecione...', value: ''},
             {label: 'Despesa', value: 'DESPESA'},
             {label: 'Receita', value: 'RECEITA'},
-        ]
-    
-        const lancamentos = [
-            {id:1, descricao: 'boleto', valor: 5,  mes: 1, tipo:'Despesa', status: 'Efetivado'}
         ]
     
         return(
@@ -85,7 +107,7 @@ class ConsultaLancamentos extends React.Component
                 <div className="row">
                     <div className="col-md-12">
                         <div className="bs-component">
-                            <LancamentoTable lancamentos={lancamentos} />
+                            <LancamentoTable lancamentos={this.state.lancamento} />
                         </div>
                     </div>
                 </div>
