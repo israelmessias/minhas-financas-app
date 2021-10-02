@@ -15,7 +15,7 @@ function LancamentoTable (props){
                 <button type="button" className="btn btn-primary" onClick={e=>props.editar(lancamento)}>Editar</button>
 
                 <button type="button"
-                onClick={e => props.delete(lancamento.id)} 
+                onClick={e => props.delete(lancamento)} 
                 className="btn btn-danger">Deletar
                 </button>
             </td>
