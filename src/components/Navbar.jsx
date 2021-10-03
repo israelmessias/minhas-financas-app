@@ -15,7 +15,7 @@ function NavBar ()
           <ul className="navbar-nav">
             <NavBarIntem href="#/home" label="Home"/>
             <NavBarIntem href="#/cadastro-user" label="Cadastro"/>
-            <NavBarIntem href="#" label="Lançamentos" />
+            <NavBarIntem href="#/consulta-lancamento" label="Lançamentos" />
             <NavBarIntem href="#/login" label="Login" />
         </ul> 
 
