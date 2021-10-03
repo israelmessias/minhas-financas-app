@@ -6,6 +6,7 @@ import Login from '../views/Login'
 import CadastroUser from '../views/CadastroUser'
 import Home from '../views/Home'
 import ConsultaLancamentos from "../views/lancamento/ConsultaLancamentos";
+import CadastroLancamento from "../views/lancamento/CadastroLancamento";
 
 /*
 *   HashRouter -> /#/ vai buscar na pasta raiz
@@ -22,6 +23,7 @@ function Rotas()
                 <Route path="/login" component={Login} />
                 <Route path="/cadastro-user" component={CadastroUser} />
                 <Route path="/consulta-lancamento" component={ConsultaLancamentos} />
+                <Route path="/cadastro-lancamento" component={CadastroLancamento} />
             </Switch>
         </HashRouter>
         
