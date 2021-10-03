@@ -114,8 +114,7 @@ class CadastroLancamento extends React.Component
                             className="form-control" 
                             disabled 
                             name="status"
-                            value={this.state.status}
-                            onChange={this.handleChange}/>
+                            value={this.state.status}/>
                         </FormGroup>  
                     </div>
                 </div>
