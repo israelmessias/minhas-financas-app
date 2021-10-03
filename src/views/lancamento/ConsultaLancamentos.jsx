@@ -1,14 +1,14 @@
 import React from "react";
-import { withRouter } from 'react-router-dom'
-import Card from '../../components/Card'
+import { withRouter } from 'react-router-dom';
+import Card from '../../components/Card';
 import FormGroup from '../../components/Form-group';
-import SelectMenu from '../../components/SelectMenu'
-import LancamentoTable from './LancamentoTable'
+import SelectMenu from '../../components/SelectMenu';
+import LancamentoTable from './LancamentoTable';
 
 import LancamentoService from "../app/service/LancamentoService";
 import LocalStorageService from "../app/localStorageService";
-import * as mensages from '../../components/Toastr'
-import {Dialog} from 'primereact/dialog'
+import * as mensages from '../../components/Toastr';
+import {Dialog} from 'primereact/dialog';
 import { Button } from 'primereact/button';
 
 
