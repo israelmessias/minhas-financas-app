@@ -8,6 +8,8 @@ import LancamentoTable from './LancamentoTable'
 import LancamentoService from "../app/service/LancamentoService";
 import LocalStorageService from "../app/localStorageService";
 import * as mensages from '../../components/Toastr'
+import {Dialog} from 'primereact/dialog'
+import { Button } from 'primereact/button';
 
 
 class ConsultaLancamentos extends React.Component
@@ -24,7 +26,10 @@ class ConsultaLancamentos extends React.Component
         mes: '',
         tipo: '',
         descricao: '',
-        lancamento: []
+        lancamento: [],
+        displayBasic: false,
+        lancamentoDeletar: {}
+        
     }
 
     buscar = () =>
@@ -59,15 +64,26 @@ class ConsultaLancamentos extends React.Component
     {
         console.log('Editar lançamento', id)
     }
-    deletar = (lancamento) =>
+
+    confirmacaoDeDeletar= (lancamento) =>
+    {
+        this.setState({displayBasic: true, lancamentoDeletar: lancamento})
+    }
+
+    cancelarDelacao = () =>
+    {
+        this.setState({displayBasic: false, lancamentoDeletar: {}})
+    }
+
+    deletar = () =>
     {
         this.service    
-        .deletar(lancamento.id)
+        .deletar(this.state.lancamentoDeletar.id)
         .then(response=>{
             const lancamentos = this.state.lancamento;
-            const index = lancamentos.indexOf(lancamento);
+            const index = lancamentos.indexOf(this.state.lancamento);
             lancamentos.splice(index, 1);
-            this.setState(lancamentos)
+            this.setState({lancamentos: lancamentos, displayBasic: false})
             mensages.mostrarSuccess('Lançamento deletado com sucesso!')
         })
         .catch(erro =>
@@ -81,6 +97,13 @@ class ConsultaLancamentos extends React.Component
         const meses = this.service.obterMeses()
         
         const tipos = this.service.tipos()
+
+        const confirmdisplayBasic = (
+            <div>
+                <Button label="Cancelar" icon="pi pi-times" onClick={this.cancelarDelacao} className="p-button-text" />
+                <Button label="Deletar" icon="pi pi-check" onClick={this.deletar} autoFocus />
+            </div>
+        );
     
         return(
             <Card title="Consulta Lançamentos">
@@ -127,9 +150,18 @@ class ConsultaLancamentos extends React.Component
                     <div className="col-md-12">
                         <div className="bs-component">
                             <LancamentoTable lancamentos={this.state.lancamento} 
-                            delete={this.deletar} editar={this.editar}/>
+                            delete={this.confirmacaoDeDeletar} editar={this.editar}/>
                         </div>
                     </div>
+                </div>
+                <div>
+                <Dialog header="Confirmar Delação?" 
+                visible={this.state.displayBasic} 
+                modal={true} style={{ width: '50vw' }} 
+                footer={confirmdisplayBasic}
+                 onHide={() =>this.setState({displayBasic: false})}>
+                     <p>Confirma a exclusão deste Lançamento?</p> 
+                     </Dialog>   
                 </div>
             </Card>
         )
