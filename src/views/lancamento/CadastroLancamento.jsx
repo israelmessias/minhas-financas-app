@@ -8,6 +8,8 @@ import { withRouter } from 'react-router-dom';
 
 import LancamentoService from '../app/service/LancamentoService';
 
+import {mostrarSuccess, mostrarErro} from '../../components/Toastr'
+
 class CadastroLancamento extends React.Component
 {
 
@@ -30,7 +32,19 @@ class CadastroLancamento extends React.Component
 
     submit = () =>
     {
-        console.log(this.state)
+        // destructor
+        const { descricao, valor, mes, ano, tipo } = this.state; 
+
+        const lancamento = { descricao, valor, mes, ano, tipo };
+
+        this.service
+        .salvar(lancamento)
+        .then(response =>{
+            mostrarSuccess('Lançamento salvo com sucesso!')
+        }).catch(erro =>{
+            mostrarErro(erro.response.data)
+            }
+        )
     }
 
     handleChange = (event) => 
