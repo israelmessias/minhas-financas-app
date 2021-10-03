@@ -28,12 +28,17 @@ class CadastroLancamento extends React.Component
         status: ''
     }
 
+    submit = () =>
+    {
+        console.log(this.state)
+    }
+
     handleChange = (event) => 
     {
         const value = event.target.value;
-        const name = event.target.value;
+        const name = event.target.name;
 
-        this.setState({[name]: value})
+        this.setState({ [name] : value })
     }
 
     render()
@@ -48,12 +53,11 @@ class CadastroLancamento extends React.Component
                 <div className="row">
                     <div className="col-md-12">
                         <FormGroup id="inputDescricao" label="Descrição: *">
-                            <input id="inputDescricao" 
-                            name="descricao"
-                            value={this.state.descricao}
-                            type="text" 
-                            className="form-control"
-                            onChange={this.handleChange} />
+                            <input  type="text" id="inputDescricao"  
+                                   className="form-control" 
+                                   name="descricao"
+                                   value={this.state.descricao}
+                                   onChange={this.handleChange}  />
                         </FormGroup>
                     </div>
                 </div>
@@ -74,8 +78,6 @@ class CadastroLancamento extends React.Component
                         <FormGroup id="inputMes" label="Mês: *">
                             <SelectMenu id="inputMes" 
                             lista={meses} 
-                            value={this.state.tipo}
-                            onChange={e =>this.setState({tipo: e.target.value})}
                             className="form-control"
                             name="mes"
                             value={this.state.mes}
@@ -122,7 +124,7 @@ class CadastroLancamento extends React.Component
                 <div className="row">
                     <div className="col-md-6">
                         <br />
-                        <button className="btn btn-success">Salvar</button>
+                        <button className="btn btn-success" onClick={this.submit}>Salvar</button>
                         <button className="btn btn-danger">Cancelar</button>
                     </div>
                 </div>
