@@ -9,6 +9,7 @@ import { withRouter } from 'react-router-dom';
 import LancamentoService from '../app/service/LancamentoService';
 
 import {mostrarSuccess, mostrarErro} from '../../components/Toastr'
+import LocalStorage from '../app/localStorageService';
 
 class CadastroLancamento extends React.Component
 {
@@ -32,10 +33,10 @@ class CadastroLancamento extends React.Component
 
     submit = () =>
     {
+        const usuarioLogado = LocalStorage.obterIten('_usuario_logado')
         // destructor
         const { descricao, valor, mes, ano, tipo } = this.state; 
-
-        const lancamento = { descricao, valor, mes, ano, tipo };
+        const lancamento = { descricao, valor, mes, ano, tipo, usuario: usuarioLogado.id };
 
         this.service
         .salvar(lancamento)
@@ -43,8 +44,7 @@ class CadastroLancamento extends React.Component
             mostrarSuccess('Lançamento salvo com sucesso!')
         }).catch(erro =>{
             mostrarErro(erro.response.data)
-            }
-        )
+            })
     }
 
     handleChange = (event) => 
