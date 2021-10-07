@@ -56,6 +56,12 @@ class CadastroLancamento extends React.Component
         this.setState({ [name] : value })
     }
 
+    componentDidMount = () =>
+    {
+        const param = this.props.match.params
+        console.log('param: ', param)
+    }
+
     render()
     {
 
