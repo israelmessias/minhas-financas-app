@@ -8,17 +8,11 @@ import { withRouter } from 'react-router-dom';
 
 import LancamentoService from '../app/service/LancamentoService';
 
-import {mostrarSuccess, mostrarErro} from '../../components/Toastr'
+import * as messages from '../../components/Toastr'
 import LocalStorage from '../app/localStorageService';
 
 class CadastroLancamento extends React.Component
 {
-
-    constructor()
-    {
-        super()
-        this.service = new LancamentoService();
-    }
 
     state =
     {
@@ -28,7 +22,28 @@ class CadastroLancamento extends React.Component
         mes: '',
         valor: '',
         tipo: '',
-        status: ''
+        status: '',
+        usuario: null
+    }
+
+    constructor()
+    {
+        super()
+        this.service = new LancamentoService();
+    }
+
+
+    componentDidMount(){
+        const lancamento = LocalStorage.obterIten('_lancamento')
+
+        this.service
+        .obterPorId(lancamento.id)
+        .then( response => {
+            this.setState({...response.data})
+        })
+        .catch( erro => {
+            messages.mostrarErro(erro.response.data)
+        })
     }
 
     submit = () =>
@@ -41,12 +56,14 @@ class CadastroLancamento extends React.Component
         this.service
         .salvar(lancamento)
         .then(response =>{
+            LocalStorage.addItem('_lancamento', response.data)
             this.props.history.push('/consulta-lancamento')
-            mostrarSuccess('Lançamento salvo com sucesso!')
+            messages.mostrarSuccess('Lançamento salvo com sucesso!')
         }).catch(erro =>{
-            mostrarErro(erro.response.data)
+            messages.mostrarErro(erro.response.data)
             })
     }
+   
 
     handleChange = (event) => 
     {
@@ -56,25 +73,18 @@ class CadastroLancamento extends React.Component
         this.setState({ [name] : value })
     }
 
-    componentDidMount = () =>
-    {
-        const param = this.props.match.params
-        console.log('param: ', param)
-    }
-
     render()
     {
 
-        const meses = this.service.obterMeses()
-        
-        const tipos = this.service.tipos()
+        const meses = this.service.obterMeses();
+        const tipos = this.service.tipos();
 
         return (
             <Card title = "Cadastro de Lançamento">
                 <div className="row">
                     <div className="col-md-12">
-                        <FormGroup id="inputDescricao" label="Descrição: *">
-                            <input  type="text" id="inputDescricao"  
+                    <FormGroup id="inputDescricao" label="Descrição: *" >
+                            <input id="inputDescricao" type="text" 
                                    className="form-control" 
                                    name="descricao"
                                    value={this.state.descricao}
@@ -85,60 +95,59 @@ class CadastroLancamento extends React.Component
 
                 <div className="row">
                     <div className="col-md-6">
-                        <FormGroup id="inputAno" label="Ano: *">
+                    <FormGroup id="inputAno" label="Ano: *">
                             <input id="inputAno" 
-                            type="text" 
-                            className="form-control"
-                            name="ano"
-                            value={this.state.ano}
-                            onChange={this.handleChange} />
+                                   type="text"
+                                   name="ano"
+                                   value={this.state.ano}
+                                   onChange={this.handleChange} 
+                                   className="form-control" />
                         </FormGroup>
                     </div>
                 
                     <div className="col-md-6">
-                        <FormGroup id="inputMes" label="Mês: *">
+                    <FormGroup id="inputMes" label="Mês: *">
                             <SelectMenu id="inputMes" 
-                            lista={meses} 
-                            className="form-control"
-                            name="mes"
-                            value={this.state.mes}
-                            onChange={this.handleChange}/>
+                                        value={this.state.mes}
+                                        onChange={this.handleChange}
+                                        lista={meses} 
+                                        name="mes"
+                                        className="form-control" />
                         </FormGroup>
                     </div>
                 </div>
 
                 <div className="row">
                     <div className="col-md-4">
-                        <FormGroup id="inputValor" label="Valor: *">
-                                <input id="inputValor" 
-                                type="text" 
-                                className="form-control"
-                                name="valor"
-                                value={this.state.valor}
-                                onChange={this.handleChange} 
-                                />
+                    <FormGroup id="inputValor" label="Valor: *">
+                            <input id="inputValor" 
+                                   type="text"
+                                   name="valor"
+                                   value={this.state.valor}
+                                   onChange={this.handleChange} 
+                                   className="form-control" />
                         </FormGroup>
                     </div> 
 
                     <div className="col-md-4">   
-                        <FormGroup id="inputTipo" label="Tipo: *">
-                            <SelectMenu id="inputTipo"
-                             lista={tipos}
-                             name="tipo"
-                             value={this.state.tipo}
-                            onChange={e =>this.setState({tipo: e.target.value})}
-                              className="form-control" />
+                    <FormGroup id="inputTipo" label="Tipo: *">
+                            <SelectMenu id="inputTipo" 
+                                        lista={tipos} 
+                                        name="tipo"
+                                        value={this.state.tipo}
+                                        onChange={this.handleChange}
+                                        className="form-control" />
                         </FormGroup>  
                     </div>
 
                     <div className="col-md-4">   
-                        <FormGroup id="inputStatus" label="Status: *">
+                    <FormGroup id="inputStatus" label="Status: ">
                             <input type="text" 
-                            className="form-control" 
-                            disabled 
-                            name="status"
-                            value={this.state.status}/>
-                        </FormGroup>  
+                                   className="form-control" 
+                                   name="status"
+                                   value={this.state.status}
+                                   disabled />
+                        </FormGroup> 
                     </div>
                 </div>
 
@@ -155,4 +164,4 @@ class CadastroLancamento extends React.Component
     }
 }
 
-export default withRouter (CadastroLancamento);
+export default withRouter(CadastroLancamento);
