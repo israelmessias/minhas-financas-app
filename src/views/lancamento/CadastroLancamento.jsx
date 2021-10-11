@@ -33,18 +33,17 @@ class CadastroLancamento extends React.Component
     }
 
 
-    componentDidMount(){
-        const lancamento = LocalStorage.obterIten('_lancamento')
-
-        this.service
-        .obterPorId(lancamento.id)
-        .then( response => {
-            this.setState({...response.data})
-        })
-        .catch( erro => {
-            messages.mostrarErro(erro.response.data)
-        })
-    }
+     componentDidMount(){
+         const lancamento = LocalStorage.obterIten('_lancamento')
+         this.service
+         .obterPorId(lancamento.id)
+         .then( response => {
+             this.setState({...response.data})
+         })
+         .catch( erro => {
+             messages.mostrarErro(erro.response.data)
+         })
+     }
 
     submit = () =>
     {
@@ -56,7 +55,7 @@ class CadastroLancamento extends React.Component
         this.service
         .salvar(lancamento)
         .then(response =>{
-            LocalStorage.addItem('_lancamento', response.data)
+            // LocalStorage.addItem('_lancamento', response.data)
             this.props.history.push('/consulta-lancamento')
             messages.mostrarSuccess('Lançamento salvo com sucesso!')
         }).catch(erro =>{
