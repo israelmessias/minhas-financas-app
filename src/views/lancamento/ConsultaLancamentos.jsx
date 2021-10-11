@@ -28,7 +28,8 @@ class ConsultaLancamentos extends React.Component
         descricao: '',
         lancamento: [],
         displayBasic: false,
-        lancamentoDeletar: {}
+        lancamentoDeletar: {},
+        LancamentoEditar: {}
         
     }
 
@@ -60,15 +61,24 @@ class ConsultaLancamentos extends React.Component
         this.service
         .consultar(lancamentoFiltro)
             .then(response => {
+                
                 this.setState({lancamento: response.data})
             }).catch(erro => {
                 console.log(erro)
             })
     }
 
-    editar = (id) =>
+    editar = (lancamento) =>
     {
-        this.props.history.push(`/cadastro-lancamento/${id}`)
+        this.service.obterPorId(lancamento.id)
+        .then( response => {
+            LocalStorageService.addItem('_lancamento', response.data)
+            this.props.history.push(`/cadastro-lancamento/${lancamento.id}`)
+        })
+        .catch( erro => [
+            mensages.mostrarErro(erro.response.data)
+        ])
+        
     }
 
     confirmacaoDeDeletar= (lancamento) =>
