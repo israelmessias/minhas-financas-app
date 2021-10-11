@@ -20,12 +20,15 @@ class ConsultaLancamentos extends React.Component
         this.service = new LancamentoService();
     }
 
+    usuarioLogado = LocalStorageService.obterIten('_usuario_logado')
+
     state=
     {
         ano: '',
         mes: '',
         tipo: '',
         descricao: '',
+        usuario: this.usuarioLogado,
         lancamento: [],
         displayBasic: false,
         lancamentoDeletar: {},
@@ -48,20 +51,19 @@ class ConsultaLancamentos extends React.Component
             return false
         }
 
-        const usuarioLogado = LocalStorageService.obterIten('_usuario_logado')
+        //const usuarioLogado = LocalStorageService.obterIten('_usuario_logado')
 
         const lancamentoFiltro ={
             ano: this.state.ano,
             mes: this.state.mes,
             tipo: this.state.tipo,
             descricao: this.state.descricao,
-            usuario: usuarioLogado.id
+            usuario: this.state.usuario.id
         }
 
         this.service
         .consultar(lancamentoFiltro)
             .then(response => {
-                
                 this.setState({lancamento: response.data})
             }).catch(erro => {
                 console.log(erro)
@@ -72,12 +74,12 @@ class ConsultaLancamentos extends React.Component
     {
         this.service.obterPorId(lancamento.id)
         .then( response => {
-            LocalStorageService.addItem('_lancamento', response.data)
+            LocalStorageService.addItem('_lancamento', lancamento)
             this.props.history.push(`/cadastro-lancamento/${lancamento.id}`)
         })
-        .catch( erro => [
+        .catch( erro => {
             mensages.mostrarErro(erro.response.data)
-        ])
+        })
         
     }
 
