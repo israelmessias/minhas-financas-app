@@ -11,6 +11,7 @@ import LancamentoService from '../app/service/LancamentoService';
 import * as messages from '../../components/Toastr'
 import LocalStorage from '../app/localStorageService';
 
+
 class CadastroLancamento extends React.Component
 {
 
@@ -33,33 +34,49 @@ class CadastroLancamento extends React.Component
     }
 
 
-     componentDidMount(){
-         const lancamento = LocalStorage.obterIten('_lancamento')
-         this.service
-         .obterPorId(lancamento.id)
-         .then( response => {
-             this.setState({...response.data})
-         })
-         .catch( erro => {
-             messages.mostrarErro(erro.response.data)
-         })
-     }
+    componentDidMount(){
+        const lancamento = LocalStorage.obterIten('_lancamento')
+
+        this.service
+        .obterPorId(lancamento.id)
+        .then( response => {
+            this.setState({...response.data})
+        })
+        .catch( erro => {
+            messages.mostrarErro(erro.response.data)
+        })
+    }
 
     submit = () =>
     {
         const usuarioLogado = LocalStorage.obterIten('_usuario_logado')
         // destructor
-        const { descricao, valor, mes, ano, tipo } = this.state; 
+        const { descricao, valor, mes, ano, tipo,  } = this.state; 
         const lancamento = { descricao, valor, mes, ano, tipo, usuario: usuarioLogado.id };
 
         this.service
         .salvar(lancamento)
         .then(response =>{
-            // LocalStorage.addItem('_lancamento', response.data)
             this.props.history.push('/consulta-lancamento')
             messages.mostrarSuccess('Lançamento salvo com sucesso!')
         }).catch(erro =>{
             messages.mostrarErro(erro.response.data)
+            })
+    }
+
+    atualizar = () =>
+    {
+        const usuarioLogado = LocalStorage.obterIten('_usuario_logado')
+        const { descricao, valor, mes, ano, tipo, status, id } = this.state;
+        const lancamento = { descricao, valor, mes, ano, tipo, status, id, usuario: usuarioLogado.id };
+        this.service
+        .atualizar(lancamento)
+        .then( response =>
+            {
+                this.props.history.push('/consulta-lancamento')
+                messages.mostrarSuccess('Lancamento atualizado com sucesso')
+            }).catch( erro => {
+                messages.mostrarErro(erro.response.data)
             })
     }
    
@@ -154,6 +171,7 @@ class CadastroLancamento extends React.Component
                     <div className="col-md-6">
                         <br />
                         <button className="btn btn-success" onClick={this.submit}>Salvar</button>
+                        <button className="btn btn-primary" onClick={this.atualizar}>Atualizar</button>
                         <button onClick={e => this.props.history.push('/consulta-lancamento')} className="btn btn-danger">Cancelar</button>
                     </div>
                 </div>
