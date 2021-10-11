@@ -24,7 +24,8 @@ class CadastroLancamento extends React.Component
         valor: '',
         tipo: '',
         status: '',
-        usuario: null
+        usuario: null,
+        atualizando: false
     }
 
     constructor()
@@ -36,15 +37,19 @@ class CadastroLancamento extends React.Component
 
     componentDidMount(){
         const lancamento = LocalStorage.obterIten('_lancamento')
+        const params = this.props.match.params
 
-        this.service
-        .obterPorId(lancamento.id)
-        .then( response => {
-            this.setState({...response.data})
-        })
-        .catch( erro => {
-            messages.mostrarErro(erro.response.data)
-        })
+        if(params.id)
+        {
+            this.service
+            .obterPorId(lancamento.id)
+            .then( response => {
+                this.setState({...response.data, atualizando: true})
+            })
+            .catch( erro => {
+                messages.mostrarErro(erro.response.data)
+            })
+    }
     }
 
     submit = () =>
@@ -94,9 +99,10 @@ class CadastroLancamento extends React.Component
 
         const meses = this.service.obterMeses();
         const tipos = this.service.tipos();
+        const atualizando = this.state.atualizando
 
         return (
-            <Card title = "Cadastro de Lançamento">
+            <Card title = { atualizando ? 'Atualizando Lançamento' : 'Cadastrando Lançamento' }>
                 <div className="row">
                     <div className="col-md-12">
                     <FormGroup id="inputDescricao" label="Descrição: *" >
@@ -170,8 +176,12 @@ class CadastroLancamento extends React.Component
                 <div className="row">
                     <div className="col-md-6">
                         <br />
-                        <button className="btn btn-success" onClick={this.submit}>Salvar</button>
-                        <button className="btn btn-primary" onClick={this.atualizar}>Atualizar</button>
+                        {
+                            atualizando ? ( <button className="btn btn-primary" onClick={this.atualizar}>Atualizar</button>):(
+                                <button className="btn btn-success" onClick={this.submit}>Salvar</button>)
+                        }
+                        
+                        
                         <button onClick={e => this.props.history.push('/consulta-lancamento')} className="btn btn-danger">Cancelar</button>
                     </div>
                 </div>
