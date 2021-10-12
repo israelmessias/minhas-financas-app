@@ -12,7 +12,7 @@ class UsuarioService extends ApiService
 
     validar(usuario)
     {
-        const erros = []
+        const erros = [];
 
         if(!usuario.nome)
         {
