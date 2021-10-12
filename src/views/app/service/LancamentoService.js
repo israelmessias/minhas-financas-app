@@ -1,4 +1,5 @@
 import ApiService from '../apiservice'
+import ErroValidacao from '../exception/ErroValidacao'
 
 export default class LancamentoService extends ApiService{
     constructor()
@@ -45,6 +46,41 @@ export default class LancamentoService extends ApiService{
 
     atualizar(lancamento){
         return this.put(`/${lancamento.id}`, lancamento);
+    }
+
+    validacao(lancamento)
+    {
+        const erros = [];
+
+        if(!lancamento.ano)
+        {
+            erros.push('Informe ano valido!')
+        }
+
+        if(!lancamento.mes)
+        {
+            erros.push('Informe mês valido!')
+        }
+
+        if(!lancamento.valor)
+        {
+            erros.push('Informe valor valido!')
+        }
+
+        if(!lancamento.descricao)
+        {
+            erros.push('Informe descrição valida!')
+        }
+
+        if(!lancamento.tipo)
+        {
+            erros.push('Informe tipo valido!')
+        }
+
+        if(erros && erros.length > 0)
+        {
+            throw new ErroValidacao(erros)
+        }
     }
 
     consultar(lancamentoFiltro)
