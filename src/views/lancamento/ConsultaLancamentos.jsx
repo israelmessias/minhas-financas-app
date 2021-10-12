@@ -5,8 +5,8 @@ import FormGroup from '../../components/Form-group';
 import SelectMenu from '../../components/SelectMenu';
 import LancamentoTable from './LancamentoTable';
 
-import LancamentoService from "../app/service/LancamentoService";
-import LocalStorageService from "../app/localStorageService";
+import LancamentoService from "../../app/service/LancamentoService";
+import LocalStorageService from "../../app/localStorageService";
 import * as mensages from '../../components/Toastr';
 import {Dialog} from 'primereact/dialog';
 import { Button } from 'primereact/button';
@@ -110,6 +110,24 @@ class ConsultaLancamentos extends React.Component
             })
     }
 
+    alterarStatus = (lancamento, status) => 
+    {
+        //lancamento = this.props.match.params
+
+        this.service.alterarStatus(lancamento.id, status)
+        .then( response => {
+            const lancamentos = this.state.lancamento
+            const index = lancamentos.indexOf(this.state.lancamento)
+            if(index !== -1)
+            {
+                lancamento['status'] = status;
+                lancamentos[index] = lancamento
+                this.setState({ lancamento })
+            }
+            mensages.mostrarSuccess('Status atualizado com sucesso!')
+        })
+    }
+
     render()
     {
         const meses = this.service.obterMeses()
@@ -156,6 +174,7 @@ class ConsultaLancamentos extends React.Component
                                  lista={tipos}/>
                             </FormGroup>
 
+                            <br />
                             <button onClick={this.buscar} type="button" className="btn btn-success">Buscar</button>
                             <button onClick={this.preparaFormularioCadastro} type="button" className="btn btn-danger">Cadastrar</button>
                         </div>
@@ -167,8 +186,12 @@ class ConsultaLancamentos extends React.Component
                 <div className="row">
                     <div className="col-md-12">
                         <div className="bs-component">
-                            <LancamentoTable lancamentos={this.state.lancamento} 
-                            delete={this.confirmacaoDeDeletar} editar={this.editar}/>
+                            <LancamentoTable
+                            lancamentos={this.state.lancamento} 
+                            delete={this.confirmacaoDeDeletar} 
+                            editar={this.editar}
+                            status={this.alterarStatus} />
+
                         </div>
                     </div>
                 </div>
