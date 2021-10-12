@@ -43,6 +43,9 @@ class CadastroUser extends React.Component
                 mostrarErro(erro.response.data)
             })
     }
+    cancelar = () => {
+        this.props.history.push('/login')
+    }
 
     render()
     {
@@ -78,7 +81,7 @@ class CadastroUser extends React.Component
                               </FormGroup>
                               <button type="button" onClick={this.cadastrar} className="btn btn-success">
                               <i className="pi pi-save"></i> Salvar</button>
-                              <button type="button" className="btn btn-danger">
+                              <button type="button" onClick={this.cancelar} className="btn btn-danger">
                               <i className="pi pi-times"></i> Cancelar</button>
                           </div>            
                       </div>            
