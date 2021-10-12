@@ -3,7 +3,7 @@ import Card from '../components/Card'
 import FormGroup from '../components/Form-group'
 import { mostrarErro, mostrarSuccess } from "../components/Toastr";
 
-import UsuarioService from "./app/service/usuarioService";
+import UsuarioService from "../app/service/usuarioService";
 
 class CadastroUser extends React.Component
 {
