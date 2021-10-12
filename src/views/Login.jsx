@@ -3,9 +3,9 @@ import Card from '../components/Card'
 import FormGroup from "../components/Form-group";
 
 import { withRouter } from  'react-router-dom'
-import UsuarioService from "./app/service/usuarioService";
+import UsuarioService from "../app/service/usuarioService";
 import { mostrarErro } from '../components/Toastr'
-import LocalStorageService from "./app/localStorageService";
+import LocalStorageService from "../app/localStorageService";
 
 
 class Login extends React.Component{
