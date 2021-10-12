@@ -14,18 +14,22 @@ function LancamentoTable (props){
             <td>
 
                 <button
+                title="Efetivar"
                  type="button" 
                 className="btn btn-success"
-                onClick={e=>props.status(lancamento,  'EFETIVADO')}>Efetivar</button>
+                onClick={e=>props.status(lancamento,  'EFETIVADO')}><i className="pi pi-check"></i></button>
 
                 <button 
+                title="Cancelar"
                 type="button" 
                 className="btn btn-warning"
-                onClick={e=>props.status(lancamento, 'CANCELADO')}>Cancelado</button>
+                onClick={e=>props.status(lancamento, 'CANCELADO')}><i className=" pi pi-times"></i> </button>
 
-                <button type="button" className="btn btn-primary" onClick={e=>props.editar(lancamento)}>Editar</button>
+                <button type="button" className="btn btn-primary" title="editar"
+                 onClick={e=>props.editar(lancamento)}><i className=" pi pi-pencil"></i> </button>
 
-                <button type="button" className="btn btn-danger" onClick={e=>props.delete(lancamento)}>Deletar</button>
+                <button title="Deletar" type="button" 
+                 className="btn btn-danger" onClick={e=>props.delete(lancamento)}><i className=" pi pi-trash"></i> </button>
             </td>
         </tr>)
     })
