@@ -8,11 +8,8 @@ import Home from '../views/Home'
 import ConsultaLancamentos from "../views/lancamento/ConsultaLancamentos";
 import CadastroLancamento from "../views/lancamento/CadastroLancamento";
 
+import AuthService from "../app/service/authService";
 
-const UsuarioAutenticado = () =>
-{
-    return false;
-}
 
 /*Sempre que for tenta entrar em uma rota sem ter autenticado
 * Sera sempre redirecionado para o login*/
@@ -20,7 +17,7 @@ const RotasAutenticadas = ({component: Componet, ...props}) =>
 {
     return(
         <Route {...props} render={ (componentProps) => {
-           if(UsuarioAutenticado()) 
+           if(AuthService.isUsuarioAutenticado())
            {
                 return (
                     <Componet {...componentProps}/>
