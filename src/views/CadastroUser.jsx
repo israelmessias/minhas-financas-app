@@ -21,47 +21,19 @@ class CadastroUser extends React.Component
         senhaRepeticao: ''
     }
 
-
-    validar()
-    {
-        const msgs = []
-
-        if(!this.state.nome)
-        {
-            msgs.push('O campo Nome é obrigatorio!')
-        }
-
-        if(!this.state.email){
-            msgs.push('O campo Email é obrigatório.')
-        }else if( !this.state.email.match(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]/) ){
-            msgs.push('Informe um Email válido.')
-        }
-
-        if(!this.state.senha || !this.state.senhaRepeticao){
-            msgs.push('Digite a senha 2x.')
-        }else if(this.state.senha !== this.state.senhaRepeticao){
-            msgs.push('As senhas não batem.')
-        }
-
-        return msgs;
-    }
-
     cadastrar = () =>
     {
-        const msgs = this.validar();
+        const { nome, email, senha, senhaRepeticao } = this.state
 
-        if(msgs && msgs.length > 0)
-        {
-            msgs.forEach ( (msgs) => {
-                mostrarErro(msgs)
-            })
-            return false;
-        }
+        const usuario = { nome ,  email, senha, senhaRepeticao }
 
-        const usuario = {
-            nome: this.state.nome,  
-            email: this.state.email,
-            senha: this.state.senha
+        // const msgs = this.service.validar
+
+        try {
+            this.service.validar(usuario)
+        } catch (erros) {
+            mostrarErro(erros.messages)
+            return false
         }
 
         this.service.salvar(usuario)
