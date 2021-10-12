@@ -15,13 +15,15 @@ function LancamentoTable (props){
 
                 <button
                 title="Efetivar"
-                 type="button" 
+                 type="button"
+                 disabled={lancamento.status !== 'PENDENTE'} 
                 className="btn btn-success"
                 onClick={e=>props.status(lancamento,  'EFETIVADO')}><i className="pi pi-check"></i></button>
 
                 <button 
                 title="Cancelar"
-                type="button" 
+                type="button"
+                disabled={lancamento.status !== 'PENDENTE'}  
                 className="btn btn-warning"
                 onClick={e=>props.status(lancamento, 'CANCELADO')}><i className=" pi pi-times"></i> </button>
 
