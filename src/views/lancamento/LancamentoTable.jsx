@@ -12,12 +12,20 @@ function LancamentoTable (props){
             <td>{lancamento.mes}</td>
             <td>{lancamento.status}</td>
             <td>
+
+                <button
+                 type="button" 
+                className="btn btn-success"
+                onClick={e=>props.status(lancamento,  'EFETIVADO')}>Efetivar</button>
+
+                <button 
+                type="button" 
+                className="btn btn-warning"
+                onClick={e=>props.status(lancamento, 'CANCELADO')}>Cancelado</button>
+
                 <button type="button" className="btn btn-primary" onClick={e=>props.editar(lancamento)}>Editar</button>
 
-                <button type="button"
-                onClick={e => props.delete(lancamento)} 
-                className="btn btn-danger">Deletar
-                </button>
+                <button type="button" className="btn btn-danger" onClick={e=>props.delete(lancamento)}>Deletar</button>
             </td>
         </tr>)
     })
