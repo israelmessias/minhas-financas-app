@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar';
 
 
 import 'bootswatch/dist/pulse/bootstrap.css'
-import '../views/custom.css'
+import '../custom.css'
 
 import 'toastr/build/toastr.css'
 import 'toastr/build/toastr.min.js'
