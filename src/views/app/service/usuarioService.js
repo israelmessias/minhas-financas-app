@@ -37,6 +37,8 @@ class UsuarioService extends ApiService
         }
     }
 
+     
+
     autenticar(credenciais)
     {
         return this.post('/autenticar', credenciais)
