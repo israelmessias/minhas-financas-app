@@ -2,6 +2,7 @@ import React from 'react';
 
 import Rotas from './Rotas'
 import Navbar from '../components/Navbar';
+import ProvedorAutenticacao from './ProvedorAutenticacao';
 
 
 import 'bootswatch/dist/pulse/bootstrap.css'
@@ -18,12 +19,12 @@ class App extends React.Component{
   render()
   {
     return(
-      <>
+      <ProvedorAutenticacao>
          <Navbar />
          <div className="container">
               <Rotas />
          </ div>
-      </>  
+      </ ProvedorAutenticacao>  
     )
   }
 }

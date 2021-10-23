@@ -6,6 +6,7 @@ import { withRouter } from  'react-router-dom'
 import UsuarioService from "../app/service/usuarioService";
 import { mostrarErro } from '../components/Toastr'
 import LocalStorageService from "../app/localStorageService";
+import { AuthContext } from "../main/ProvedorAutenticacao";
 
 
 class Login extends React.Component{
@@ -31,6 +32,7 @@ class Login extends React.Component{
             senha: this.state.senha
         }).then( response => {
             LocalStorageService.addItem('_usuario_logado', response.data)
+            this.context.iniciarSessao(response.data)
             this.props.history.push('/home')
         }).catch( erro => {
             mostrarErro(erro.response.data)
@@ -88,5 +90,7 @@ class Login extends React.Component{
         )
     }
 }
+
+Login.contextType = AuthContext
 
 export default withRouter (Login)

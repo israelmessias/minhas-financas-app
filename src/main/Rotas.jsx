@@ -7,17 +7,19 @@ import CadastroUser from '../views/CadastroUser'
 import Home from '../views/Home'
 import ConsultaLancamentos from "../views/lancamento/ConsultaLancamentos";
 import CadastroLancamento from "../views/lancamento/CadastroLancamento";
+import { AuthConsumer } from "./ProvedorAutenticacao";
 
-import AuthService from "../app/service/authService";
+
+//import AuthService from "../app/service/authService";
 
 
 /*Sempre que for tenta entrar em uma rota sem ter autenticado
 * Sera sempre redirecionado para o login*/
-const RotasAutenticadas = ({component: Componet, ...props}) =>
+const RotasAutenticadas = ({component: Componet, usuarioAutenticado,  ...props}) =>
 {
     return(
         <Route {...props} render={ (componentProps) => {
-           if(AuthService.isUsuarioAutenticado())
+           if(usuarioAutenticado)
            {
                 return (
                     <Componet {...componentProps}/>
@@ -37,20 +39,25 @@ const RotasAutenticadas = ({component: Componet, ...props}) =>
 *   Router -> são os "casos"
 */
 
-function Rotas()
+function Rotas(props)
 {
     return (
         <HashRouter>
             <Switch>
                 <Route path="/login" component={Login} />
                 <Route path="/cadastro-user" component={CadastroUser} />
-                <RotasAutenticadas path="/home" component={Home} />
-                <RotasAutenticadas path="/consulta-lancamento" component={ConsultaLancamentos} />
-                <RotasAutenticadas path='/cadastro-lancamento/:id?' component={CadastroLancamento} />
+                <RotasAutenticadas usuarioAutenticado={props.usuarioAutenticado} path="/home" component={Home} />
+                <RotasAutenticadas usuarioAutenticado={props.usuarioAutenticado} path="/consulta-lancamento" component={ConsultaLancamentos} />
+                <RotasAutenticadas usuarioAutenticado={props.usuarioAutenticado} path='/cadastro-lancamento/:id?' component={CadastroLancamento} />
             </Switch>
         </HashRouter>
         
     )
 }
 
-export default Rotas
+export default () => (
+    <AuthConsumer>
+        {(context) => (<Rotas usuarioAutenticado={context.isAutenticado} />)}
+    </AuthConsumer>
+    )
+     
